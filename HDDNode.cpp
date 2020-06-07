@@ -1,15 +1,15 @@
 #include <bits/stdc++.h>
-#include <unistd.h>
+// #include <unistd.h>
 
 using namespace std;
 
-string pwd()
-{
-  char buff[FILENAME_MAX];
-  getcwd(buff, FILENAME_MAX);
-  string current_working_dir(buff);
-  return current_working_dir;
-}
+// string pwd()
+// {
+//   char buff[FILENAME_MAX];
+//   getcwd(buff, FILENAME_MAX);
+//   string current_working_dir(buff);
+//   return current_working_dir;
+// }
 
 void writeToFile(string filename, string name, string score)
 {
@@ -18,15 +18,17 @@ void writeToFile(string filename, string name, string score)
   myfile.close();
 }
 
-void readFromFile(string filename)
+string readFromFile(string filename)
 {
   ifstream obj(filename);
   string line;
+  string res;
   while (getline(obj, line))
   {
-    cout << line << endl;
+    res += line + "\n";
   }
   obj.close();
+  return res;
 }
 
 class HDDNode
@@ -47,6 +49,11 @@ public:
 
     writeToFile("xyz.txt", this->key, this->value);
   }
+
+  HDDNode(string key)
+  {
+    string contents = readFromFile("xyz.txt");
+  }
 };
 
 int main()
@@ -54,10 +61,11 @@ int main()
   string name, score;
   cout << "Enter name and score:\n";
   cin >> name >> score;
-  HDDNode* root = new HDDNode(name, score);
+  HDDNode *root = new HDDNode(name, score);
   cout << "Wrote to file\n";
 
-  readFromFile("xyz.txt");
+  string contents = readFromFile("xyz.txt");
   cout << "Read from file\n";
+  cout << contents;
   return 0;
 }
